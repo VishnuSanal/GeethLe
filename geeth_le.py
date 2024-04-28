@@ -121,7 +121,7 @@ def generate_from_youtube(video_id):
     album = spotify_response_json["album"]["name"]
     thumbnail_url = spotify_response_json["album"]["images"][0]["url"]
 
-    frame_image_url = generate(video_id, title, artist, album, thumbnail_url)
+    frame_image_url = generate(video_id, album, title, artist, thumbnail_url)
 
     return title, f'{album} • {artist}', frame_image_url, f'http://youtu.be/{video_id}'
 
@@ -153,7 +153,7 @@ def generate_from_spotify(spotify_track_id):
     album = spotify_response_json["album"]["name"]
     thumbnail_url = spotify_response_json["album"]["images"][0]["url"]
 
-    frame_image_url = generate(spotify_track_id, title, artist, album, thumbnail_url)
+    frame_image_url = generate(spotify_track_id, album, title, artist, thumbnail_url)
 
     return title, f'{album} • {artist}', frame_image_url, f'https://open.spotify.com/track/{spotify_track_id}'
 
@@ -204,6 +204,6 @@ def search_music(query):
     album = spotify_response_json["album"]["name"]
     thumbnail_url = spotify_response_json["album"]["images"][0]["url"]
 
-    frame_image_url = generate(spotify_track_id, title, artist, album, thumbnail_url)
+    frame_image_url = generate(spotify_track_id, album, title, artist, thumbnail_url)
 
     return title, f'{album} • {artist}', frame_image_url, f'https://open.spotify.com/track/{spotify_track_id}'
