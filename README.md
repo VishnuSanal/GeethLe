@@ -14,6 +14,7 @@ Append your search query & it finds the track, generates a custom thumbnail with
 
 ### Anything else?
 
+- ```https://geethle.onrender.com/search/<query>```
 - ```https://geethle.onrender.com/yt/<youtube-id>```
 - ```https://geethle.onrender.com/sp/<spotify-id>```
 
