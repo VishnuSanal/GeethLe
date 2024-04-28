@@ -1,13 +1,13 @@
 from flask import Flask, render_template, redirect
 
-import musicfetch
+import geeth_le
 
 app = Flask(__name__)
 
 
 @app.route('/yt/<video_id>')
 def generate_from_youtube(video_id):
-    title, description, frame_url, redirect_url = musicfetch.generate_from_youtube(video_id)
+    title, description, frame_url, redirect_url = geeth_le.generate_from_youtube(video_id)
 
     metadata = {'title': title, 'description': description, 'frame_url': frame_url,
                 "redirect_url": redirect_url}
@@ -16,7 +16,7 @@ def generate_from_youtube(video_id):
 
 @app.route('/sp/<spotify_track_id>')
 def generate_from_spotify(spotify_track_id):
-    title, description, frame_url, redirect_url = musicfetch.generate_from_spotify(spotify_track_id)
+    title, description, frame_url, redirect_url = geeth_le.generate_from_spotify(spotify_track_id)
 
     metadata = {'title': title, 'description': description, 'frame_url': frame_url,
                 "redirect_url": redirect_url}
@@ -26,7 +26,7 @@ def generate_from_spotify(spotify_track_id):
 @app.route('/<query>')
 @app.route('/search/<query>')
 def search_music(query):
-    title, description, frame_url, redirect_url = musicfetch.search_music(query)
+    title, description, frame_url, redirect_url = geeth_le.search_music(query)
 
     metadata = {'title': title, 'description': description, 'frame_url': frame_url, "redirect_url": redirect_url}
     return render_template('index.html', metadata=metadata)

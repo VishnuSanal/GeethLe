@@ -29,7 +29,6 @@ logging.basicConfig(level=logging.INFO)
 def upload_frame(video_id, frame_image):
     blob = storage.bucket().blob(video_id + ".png")
 
-    # if True:
     if not blob.exists():
         temp_file = tempfile.NamedTemporaryFile(suffix=".png")
         frame_image.save(temp_file.name)
@@ -37,6 +36,42 @@ def upload_frame(video_id, frame_image):
         blob.upload_from_file(file_obj=temp_file, content_type="image/png")
 
     return blob.generate_signed_url(datetime.timedelta(days=15))
+
+
+def generate(entity_id, album, title, artist, thumbnail_url):
+    logger.info("#generate")
+
+    logger.info(f'entity_id: {entity_id}')
+    logger.info(f'album: {album}')
+    logger.info(f'title: {title}')
+    logger.info(f'artist: {artist}')
+    logger.info(f'thumbnail_url: {thumbnail_url}')
+
+    frame_image = Image.new(mode='RGB', size=(500, 500), color=(50, 47, 58))
+
+    draw = ImageDraw.Draw(frame_image)
+
+    draw.text(xy=(250, 400), align='centre', text=title, fill=(233, 227, 241),
+              font=ImageFont.truetype('poppins.ttf', 44),
+              anchor="mm")
+    draw.text(xy=(250, 450), align='centre', text=f'{album} • {artist}', fill=(233, 227, 241),
+              font=ImageFont.truetype('poppins.ttf', 24),
+              anchor="mm")
+
+    album_art = Image.open(BytesIO(requests.get(thumbnail_url).content)).resize((250, 250))
+
+    size = (250, 250)
+    mask = Image.new('L', size, 0)
+    draw = ImageDraw.Draw(mask)
+    draw.rounded_rectangle(((0, 0), (250, 250)), 12, fill="white")
+
+    frame_image.paste(album_art, (125, 75), mask)
+
+    frame_image_url = upload_frame(entity_id, frame_image)
+
+    logger.info(f'frame_image_url: {frame_image_url}')
+
+    return frame_image_url
 
 
 def generate_from_youtube(video_id):
@@ -86,34 +121,7 @@ def generate_from_youtube(video_id):
     album = spotify_response_json["album"]["name"]
     thumbnail_url = spotify_response_json["album"]["images"][0]["url"]
 
-    logger.info(f'album: {album}')
-    logger.info(f'title: {title}')
-    logger.info(f'artist: {artist}')
-    logger.info(f'thumbnail_url: {thumbnail_url}')
-
-    frame_image = Image.new(mode='RGB', size=(500, 500), color=(50, 47, 58))
-
-    draw = ImageDraw.Draw(frame_image)
-
-    draw.text(xy=(250, 400), align='centre', text=title, fill=(233, 227, 241),
-              font=ImageFont.truetype('poppins.ttf', 44),
-              anchor="mm")
-    draw.text(xy=(250, 450), align='centre', text=f'{album} • {artist}', fill=(233, 227, 241),
-              font=ImageFont.truetype('poppins.ttf', 24),
-              anchor="mm")
-
-    album_art = Image.open(BytesIO(requests.get(thumbnail_url).content)).resize((250, 250))
-
-    size = (250, 250)
-    mask = Image.new('L', size, 0)
-    draw = ImageDraw.Draw(mask)
-    draw.rounded_rectangle(((0, 0), (250, 250)), 12, fill="white")
-
-    frame_image.paste(album_art, (125, 75), mask)
-
-    frame_image_url = upload_frame(video_id, frame_image)
-
-    logger.info(f'frame_image_url: {frame_image_url}')
+    frame_image_url = generate(video_id, title, artist, album, thumbnail_url)
 
     return title, f'{album} • {artist}', frame_image_url, f'http://youtu.be/{video_id}'
 
@@ -145,34 +153,7 @@ def generate_from_spotify(spotify_track_id):
     album = spotify_response_json["album"]["name"]
     thumbnail_url = spotify_response_json["album"]["images"][0]["url"]
 
-    logger.info(f'album: {album}')
-    logger.info(f'title: {title}')
-    logger.info(f'artist: {artist}')
-    logger.info(f'thumbnail_url: {thumbnail_url}')
-
-    frame_image = Image.new(mode='RGB', size=(500, 500), color=(50, 47, 58))
-
-    draw = ImageDraw.Draw(frame_image)
-
-    draw.text(xy=(250, 400), align='centre', text=title, fill=(233, 227, 241),
-              font=ImageFont.truetype('poppins.ttf', 44),
-              anchor="mm")
-    draw.text(xy=(250, 450), align='centre', text=f'{album} • {artist}', fill=(233, 227, 241),
-              font=ImageFont.truetype('poppins.ttf', 24),
-              anchor="mm")
-
-    album_art = Image.open(BytesIO(requests.get(thumbnail_url).content)).resize((250, 250))
-
-    size = (250, 250)
-    mask = Image.new('L', size, 0)
-    draw = ImageDraw.Draw(mask)
-    draw.rounded_rectangle(((0, 0), (250, 250)), 12, fill="white")
-
-    frame_image.paste(album_art, (125, 75), mask)
-
-    frame_image_url = upload_frame(video_id=spotify_track_id, frame_image=frame_image)
-
-    logger.info(f'frame_image_url: {frame_image_url}')
+    frame_image_url = generate(spotify_track_id, title, artist, album, thumbnail_url)
 
     return title, f'{album} • {artist}', frame_image_url, f'https://open.spotify.com/track/{spotify_track_id}'
 
@@ -223,36 +204,6 @@ def search_music(query):
     album = spotify_response_json["album"]["name"]
     thumbnail_url = spotify_response_json["album"]["images"][0]["url"]
 
-    logger.info(f'album: {album}')
-    logger.info(f'title: {title}')
-    logger.info(f'artist: {artist}')
-    logger.info(f'thumbnail_url: {thumbnail_url}')
-
-    frame_image = Image.new(mode='RGB', size=(500, 500), color=(50, 47, 58))
-
-    draw = ImageDraw.Draw(frame_image)
-
-    draw.text(xy=(250, 400), align='centre', text=title, fill=(233, 227, 241),
-              font=ImageFont.truetype('poppins.ttf', 44),
-              anchor="mm")
-    draw.text(xy=(250, 450), align='centre', text=f'{album} • {artist}', fill=(233, 227, 241),
-              font=ImageFont.truetype('poppins.ttf', 24),
-              anchor="mm")
-
-    album_art = Image.open(BytesIO(requests.get(thumbnail_url).content)).resize((250, 250))
-
-    size = (250, 250)
-    mask = Image.new('L', size, 0)
-    draw = ImageDraw.Draw(mask)
-    draw.rounded_rectangle(((0, 0), (250, 250)), 12, fill="white")
-
-    frame_image.paste(album_art, (125, 75), mask)
-
-    frame_image_url = upload_frame(spotify_track_id, frame_image)
-
-    logger.info(f'frame_image_url: {frame_image_url}')
+    frame_image_url = generate(spotify_track_id, title, artist, album, thumbnail_url)
 
     return title, f'{album} • {artist}', frame_image_url, f'https://open.spotify.com/track/{spotify_track_id}'
-
-# if __name__ == '__main__':
-#     print(generate_from_spotify("11dFghVXANMlKmJXsNCbNl"))
