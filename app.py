@@ -23,6 +23,7 @@ def generate_from_spotify(spotify_track_id):
     return render_template('index.html', metadata=metadata)
 
 
+@app.route('/<query>')
 @app.route('/search/<query>')
 def search_music(query):
     title, description, frame_url, redirect_url = musicfetch.search_music(query)
@@ -33,7 +34,7 @@ def search_music(query):
 
 @app.route('/')
 def welcome():
-    redirect("https://www.GitHub.com/VishnuSanal/GeethLe", code=302)
+    return redirect("https://www.GitHub.com/VishnuSanal/GeethLe", code=302)
 
 
 @app.route("/sp")
