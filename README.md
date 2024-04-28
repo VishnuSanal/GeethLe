@@ -8,7 +8,7 @@ A simple service to search for music from anywhere
 
 Sooo, assume you're talking to someone over WhatsApp & want to mention about a song. And, ofcourse you're too lazy to go find the link. :D Don't worry, I have your back!
 
-```https://geethle.onrender.com/search/<query>```
+```https://geethle.onrender.com/<query>```
 
 Append your search query & it finds the track, generates a custom thumbnail with metadata + it redirects to Spotify once you click on the link. 🙂
 
