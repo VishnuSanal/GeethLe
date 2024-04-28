@@ -3,6 +3,8 @@
 
 temp/
 service_account_key.json
+*_temp.png
+runner.py
 
 ### Flask ###
 instance/*

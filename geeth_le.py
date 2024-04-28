@@ -2,6 +2,7 @@ import datetime
 import logging
 import os
 import tempfile
+import textwrap
 from io import BytesIO
 
 import firebase_admin
@@ -51,10 +52,26 @@ def generate(entity_id, album, title, artist, thumbnail_url):
 
     draw = ImageDraw.Draw(frame_image)
 
-    draw.text(xy=(250, 400), align='centre', text=title, fill=(233, 227, 241),
+    title_wrapped = textwrap.wrap(title, 15)
+    album_wrapped = textwrap.wrap(album, 20)
+    artist_wrapped = textwrap.wrap(artist, 20)
+
+    if len(title_wrapped) > 1:
+        title_wrapped[0] = title_wrapped[0][0:16] + " ..."
+
+    if len(album_wrapped) > 1:
+        album_wrapped[0] = album_wrapped[0][0:16] + " ..."
+
+    if len(artist_wrapped) > 1:
+        artist_wrapped[0] = artist_wrapped[0][0:16] + " ..."
+
+    description_wrapped = f'{album_wrapped[0]} • {artist_wrapped[0]}'
+
+    draw.text(xy=(250, 400), align='centre', text=title_wrapped[0], fill=(233, 227, 241),
               font=ImageFont.truetype('poppins.ttf', 44),
               anchor="mm")
-    draw.text(xy=(250, 450), align='centre', text=f'{album} • {artist}', fill=(233, 227, 241),
+
+    draw.text(xy=(250, 450), align='centre', text=description_wrapped, fill=(233, 227, 241),
               font=ImageFont.truetype('poppins.ttf', 24),
               anchor="mm")
 
