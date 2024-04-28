@@ -1,0 +1,18 @@
+<html>
+<head>
+    <title>{{metadata.title}}</title>
+    <meta name="description" content="{{metadata.description}}">
+
+    <meta property="og:title" content="{{metadata.title}}"/>
+    <meta property="og:description" content="{{metadata.description}}"/>
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="{{metadata.frame_url}}"/>
+</head>
+
+<script>
+    window.onload = function() {
+        window.location.replace("{{metadata.redirect_url}}");
+    }
+</script>
+
+</html>

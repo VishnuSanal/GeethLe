@@ -1,0 +1,8 @@
+Flask~=3.0.3
+Gunicorn
+requests~=2.31.0
+pillow~=10.3.0
+firebase_admin
+musicbrainzngs~=0.7.1
+ytmusicapi~=1.6.0
+python-dotenv~=1.0.1
