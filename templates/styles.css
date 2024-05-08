@@ -1,0 +1,89 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+/* https://toolbox.signalsupply.co/apps/gradientblobcss */
+
+body {
+    width: 100%;
+    height: 100vh;
+    background: linear-gradient(rgba(22, 28, 45, 1), rgba(72, 91, 147, 1));
+}
+
+.inter {
+    font-family: "Inter", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 800;
+    font-style: normal;
+    font-variation-settings:
+        "slnt" 0;
+    text-align: center;
+    font-size: 96px;
+    color: white;
+    letter-spacing: 10px;
+    margin: 48px;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin: 48px;
+}
+
+.material-textfield {
+    position: relative;
+    width: 60%;
+}
+
+input {
+    font-size: 1rem;
+    border: 2px solid white;
+    border-radius: 12px;
+    padding: 1rem 0.7rem;
+    background-color: transparent;
+    transition: 0.1s ease-out;
+    width: 80%;
+    caret-color: white;
+}
+
+label {
+    position: absolute;
+    font-size: 1.5rem;
+    left: 10%;
+    top: 50%;
+    transform: translateY(-50%);
+    color: white;
+    padding: 0 0.3rem;
+    margin: 0 0.5rem;
+    transition: .1s ease-out;
+    transform-origin: left top;
+    pointer-events: none;
+
+    background-color: transparent;
+    color: white;
+}
+
+input:focus {
+    outline: none;
+}
+
+input:focus+label {
+    opacity: 0px;
+    transform: scale(0);
+}
+
+button {
+    border: 2px solid white;
+    border-radius: 12px;
+    background-color: transparent;
+    color: white;
+    padding: 16px 48px;
+    font-size: 1.5rem;
+    cursor: pointer;
+    text-align: center;
+}
+
+button:hover {
+    border: 1px solid white;
+    font-size: 20px;
+}
