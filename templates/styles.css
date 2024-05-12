@@ -81,7 +81,7 @@ input {
   background-color: white;
   width: 40%;
   caret-color: gray;
-  color: gray;
+  color: lightblue;
 
   position: relative;
 }
@@ -109,11 +109,19 @@ input:not(:placeholder-shown) + .placeholder {
 
   pointer-events: none;
 
-  padding: 1vw;
+  /* padding: 1vw, 1vw; */
   font-size: 1.2vw;
 
   margin: auto;
   color: gray;
+}
+
+.hint {
+  font-size: 1.2vw;
+}
+
+.blue {
+  font-size: 1.2vw;
 }
 
 .search_icon {
