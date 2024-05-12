@@ -1,31 +1,30 @@
-@import url('https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap");
 
 html {
-    height: 100%;
+  height: 100%;
 }
 
 body {
-    height: 100%;
-    margin: 0;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
+  height: 100%;
+  margin: 0;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
 
-    background:
-        linear-gradient(120deg, #FF3366, transparent 70.71%),
-        linear-gradient(240deg, #20A4F3, transparent 70.71%),
-        linear-gradient(360deg, #8FD0CA, transparent 70.71%);
+  background: linear-gradient(120deg, #ff3366, transparent 70.71%),
+    linear-gradient(240deg, #20a4f3, transparent 70.71%),
+    linear-gradient(360deg, #8fd0ca, transparent 70.71%);
 
-    /* background-image: conic-gradient(at 50% -10%, #FF6978 35%, #B1EDE8 50%, #FF6978 65%); */
-    /* background-image: conic-gradient(at 50% -10%, #2EC4B6 25%, #FF3366 50%, #20A4F3 75%); */
-    /* background-image: conic-gradient(at 50% -10%, #2EC4B6 25%, #FF3366 50%, #20A4F3 75%); */
+  /* background-image: conic-gradient(at 50% -10%, #FF6978 35%, #B1EDE8 50%, #FF6978 65%); */
+  /* background-image: conic-gradient(at 50% -10%, #2EC4B6 25%, #FF3366 50%, #20A4F3 75%); */
+  /* background-image: conic-gradient(at 50% -10%, #2EC4B6 25%, #FF3366 50%, #20A4F3 75%); */
 
-    /* background:
+  /* background:
         linear-gradient(-45deg, #8E7AB5, transparent 70.71%),
         linear-gradient(180deg, #B784B7, transparent 70.71%),
         linear-gradient(270deg, #E493B3, transparent 70.71%),
         linear-gradient(360deg, #EEA5A6, transparent 70.71%); */
 
-    /* background:
+  /* background:
         linear-gradient(-45deg, #6867AC, transparent 70.71%),
         linear-gradient(180deg, #A267AC, transparent 70.71%),
         linear-gradient(270deg, #CE7BB0, transparent 70.71%),
@@ -33,97 +32,97 @@ body {
 }
 
 main {
-    width: 100%;
+  width: 100%;
 
-    position: absolute;
+  position: absolute;
 
-    top: 50%;
-    left: 50%;
-    -ms-transform: translate(-50%, -50%);
-    transform: translate(-50%, -50%);
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
 
-    justify-content: center;
-    align-items: center;
-    text-align: center;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
 }
 
 .work-sans {
-    font-family: "Work Sans", sans-serif;
-    font-optical-sizing: auto;
-    font-weight: 400;
-    font-style: normal;
-    text-align: center;
-    color: white;
+  font-family: "Work Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+  text-align: center;
+  color: white;
 }
 
 .title {
-    font-size: 128px;
-    letter-spacing: 8px;
-    margin: 36px;
+  font-size: 7vw;
+  letter-spacing: 0.8vw;
+  margin: 1vw;
 }
 
 .subtitle {
-    font-size: 40px;
-    letter-spacing: 4px;
-    margin: 48px;
+  font-size: 3vw;
+  letter-spacing: 0.3vw;
+  margin: 1.75vw;
 }
 
 .description {
-    font-size: 24px;
-    letter-spacing: 4px;
-    margin: 12px;
+  font-size: 2vw;
+  letter-spacing: 0.1vw;
+  margin: 0.75vw;
 }
 
 input {
-    font-size: 20px;
-    border: 2px solid white;
-    border-radius: 32px;
-    padding: 16px;
-    background-color: white;
-    width: 40%;
-    caret-color: gray;
-    color: gray;
+  padding: 1vw;
+  font-size: 1.2vw;
+  border: 0.02vw solid white;
+  border-radius: 2vw;
+  background-color: white;
+  width: 40%;
+  caret-color: gray;
+  color: gray;
 }
 
 input::placeholder {
-    color: gray;
-    padding: 16px;
-    font-size: 20px;
+  color: gray;
+  padding: 1vw;
+  font-size: 1.2vw;
 }
 
 input:focus {
-    outline: none;
+  outline: none;
 }
 
 footer {
-    display: flex;
-    position: absolute;
-    bottom: 0px;
-    width: 100%;
+  display: flex;
+  position: absolute;
+  bottom: 0vw;
+  width: 100%;
 }
 
 .footer-text {
-    text-align: start;
-    font-size: 20px;
-    letter-spacing: 1px;
-    margin: 32px;
+  text-align: start;
+  font-size: 1vw;
+  letter-spacing: 0.1vw;
+  margin: 1.75vw;
 }
 
 .octocat {
-    height: 64px;
-    width: 64px;
+  height: 4vw;
+  width: 4vw;
 
-    position: fixed;
-    bottom: 0;
-    right: 0;
+  position: fixed;
+  bottom: 0;
+  right: 0;
 
-    -webkit-transform: rotate(-45deg);
-    -moz-transform: rotate(-45deg);
-    -o-transform: rotate(-45deg);
-    -ms-transform: rotate(-45deg);
-    transform: rotate(-45deg);
+  -webkit-transform: rotate(-45deg);
+  -moz-transform: rotate(-45deg);
+  -o-transform: rotate(-45deg);
+  -ms-transform: rotate(-45deg);
+  transform: rotate(-45deg);
 }
 
 .octocat:hover {
-    scale: 1.2;
+  scale: 1.2;
 }
