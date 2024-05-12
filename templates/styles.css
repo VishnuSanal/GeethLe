@@ -82,16 +82,52 @@ input {
   width: 40%;
   caret-color: gray;
   color: gray;
-}
 
-input::placeholder {
-  color: gray;
-  padding: 1vw;
-  font-size: 1.2vw;
+  position: relative;
 }
 
 input:focus {
   outline: none;
+}
+
+input:not(:placeholder-shown) + .placeholder {
+  opacity: 0;
+  transform: scale(0.9);
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.placeholder {
+  position: absolute;
+  left: 30%;
+  top: 50%;
+  transform: translateY(-50%);
+
+  pointer-events: none;
+
+  padding: 1vw;
+  font-size: 1.2vw;
+
+  margin: auto;
+  color: gray;
+}
+
+.search_icon {
+  height: 2vw;
+  width: 2vw;
+
+  position: absolute;
+  left: 67%;
+  top: 50%;
+  transform: translateY(-50%);
+
+  padding: 1vw;
+
+  margin: auto;
 }
 
 footer {
