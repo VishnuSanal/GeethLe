@@ -4,6 +4,8 @@ import geeth_le
 
 app = Flask(__name__)
 
+app.static_folder = 'static'
+
 
 @app.route('/yt/<video_id>')
 def generate_from_youtube(video_id):
@@ -26,6 +28,9 @@ def generate_from_spotify(spotify_track_id):
 @app.route('/<query>')
 @app.route('/search/<query>')
 def search_music(query):
+    if len(query) == 0:
+        return render_template('landing.html')
+
     title, description, frame_url, redirect_url = geeth_le.search_music(query)
 
     metadata = {'title': title, 'description': description, 'frame_url': frame_url, "redirect_url": redirect_url}
@@ -34,7 +39,7 @@ def search_music(query):
 
 @app.route('/')
 def welcome():
-    return redirect("https://www.GitHub.com/VishnuSanal/GeethLe", code=302)
+    return render_template('landing.html')
 
 
 @app.route("/sp")
@@ -43,5 +48,6 @@ def welcome():
 def rickroll():
     return redirect("https://www.youtube.com/watch?v=dQw4w9WgXcQ", code=302)  # you know what this is :)
 
-# if __name__ == "__main__":
-#     app.run(debug=True)
+
+if __name__ == "__main__":
+    app.run(debug=True)
