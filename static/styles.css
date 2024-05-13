@@ -62,20 +62,32 @@ main {
 
 .title {
   font-size: 7vw;
-  letter-spacing: 0.8vw;
-  margin: 1vw;
+  letter-spacing: 1vw;
+  margin: 0vw;
 }
 
 .subtitle {
   font-size: 3vw;
-  letter-spacing: 0.3vw;
-  margin: 1.75vw;
+  letter-spacing: 0.5vw;
+  margin: 0vw;
 }
 
 .description {
   font-size: 2vw;
   letter-spacing: 0.1vw;
-  margin: 0.75vw;
+  margin: 1vw;
+}
+
+.explanation {
+  font-size: 1.75vw;
+  letter-spacing: 0.1vw;
+  margin: 1.2vw;
+}
+
+.blue {
+  font-size: 1.5vw;
+  letter-spacing: 0.2vw;
+  color: blue;
 }
 
 input[type="text"] {
@@ -84,9 +96,9 @@ input[type="text"] {
   border: 0.02vw solid white;
   border-radius: 2vw;
   background-color: white;
-  width: 40%;
+  width: 40vw;
   caret-color: gray;
-  color: lightblue;
+  color: gray;
 
   position: relative;
 }
@@ -121,10 +133,6 @@ input:not(:placeholder-shown) + .placeholder {
 }
 
 .hint {
-  font-size: 1.2vw;
-}
-
-.blue {
   font-size: 1.2vw;
 }
 
@@ -180,9 +188,9 @@ input:not(:placeholder-shown) + .placeholder {
   border: 0.02vw solid white;
   border-radius: 2vw;
   background-color: white;
-  width: 15%;
+  width: 15vw;
   caret-color: gray;
-  color: lightblue;
+  color: gray;
 
   position: relative;
 }

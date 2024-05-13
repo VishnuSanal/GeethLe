@@ -1,3 +1,4 @@
+/*
 window.addEventListener("DOMContentLoaded", function (e) {
   var spotify_url = "";
   var input_link = "";
@@ -76,3 +77,4 @@ window.addEventListener("DOMContentLoaded", function (e) {
       }
     });
 });
+*/
