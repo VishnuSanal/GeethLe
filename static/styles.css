@@ -55,6 +55,11 @@ main {
   color: white;
 }
 
+.album_art {
+  height: 20vw;
+  width: 20vw;
+}
+
 .title {
   font-size: 7vw;
   letter-spacing: 0.8vw;
@@ -73,7 +78,7 @@ main {
   margin: 0.75vw;
 }
 
-input {
+input[type="text"] {
   padding: 1vw;
   font-size: 1.2vw;
   border: 0.02vw solid white;
@@ -109,7 +114,6 @@ input:not(:placeholder-shown) + .placeholder {
 
   pointer-events: none;
 
-  /* padding: 1vw, 1vw; */
   font-size: 1.2vw;
 
   margin: auto;
@@ -136,6 +140,55 @@ input:not(:placeholder-shown) + .placeholder {
   padding: 1vw;
 
   margin: auto;
+}
+
+.search_icon:hover {
+  scale: 1.1;
+}
+
+.loader {
+  height: 2vw;
+  width: 2vw;
+
+  position: absolute;
+  left: 68%;
+  top: 45%;
+  transform: translateY(-50%);
+
+  margin: auto;
+
+  border: 0.3vw solid gray;
+  border-top: 0.3vw solid #20a4f3;
+  border-radius: 50%;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.button {
+  margin: 0.5vw;
+
+  padding: 1vw;
+  font-size: 1.2vw;
+  border: 0.02vw solid white;
+  border-radius: 2vw;
+  background-color: white;
+  width: 15%;
+  caret-color: gray;
+  color: lightblue;
+
+  position: relative;
+}
+
+.button:hover {
+  scale: 1.05;
 }
 
 footer {

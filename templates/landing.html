@@ -5,21 +5,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <title>GeethLe</title>
-    <meta name="description" content="Search for songs from anywhere!">
+    <meta name="description" content="Search for songs from anywhere!" />
 
-    <meta property="og:url" content="https://geethle.onrender.com"/>
-    <meta property="og:type" content="website">
-    <meta property="og:title" content="GeethLe"/>
-    <meta property="og:description" content="Search for songs from anywhere!"/>
+    <meta property="og:url" content="https://geethle.onrender.com" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="GeethLe" />
+    <meta property="og:description" content="Search for songs from anywhere!" />
 
-    <meta name="twitter:card" content="summary">
-    <meta property="twitter:domain" content="geethle.onrender.com">
-    <meta property="twitter:url" content="https://geethle.onrender.com/">
+    <meta name="twitter:card" content="summary" />
+    <meta property="twitter:domain" content="geethle.onrender.com" />
+    <meta property="twitter:url" content="https://geethle.onrender.com/" />
 
-    <meta name="twitter:title" content="GeethLe">
-    <meta name="twitter:description" content="Search for songs from anywhere!">
+    <meta name="twitter:title" content="GeethLe" />
+    <meta
+      name="twitter:description"
+      content="Search for songs from anywhere!"
+    />
 
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='styles.css') }}"
+    />
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
     <script src="{{ url_for('static', filename='script.js') }}"></script>
 
     <title>Geeth Le</title>
@@ -27,30 +36,56 @@
 
   <body>
     <main>
+      <img src="" id="album_art" class="album_art" hidden />
+
       <p class="title work-sans">GeethLe</p>
 
-    <!--
       <div class="container">
         <input placeholder="" type="text" id="search_input" />
 
         <label for="search_input" class="placeholder">
-          <span class="hint blue">https://geethle.onrender.com/</span><span class="hint">your+fav+song</span>
+          <span class="hint blue">https://geethle.onrender.com/</span
+          ><span class="hint">your+fav+song</span>
         </label>
 
-        <img src="{{ url_for('static', filename='search_icon.png') }}" class="search_icon" id="search_button" />
+        <img
+          src="{{ url_for('static', filename='search_icon.png') }}"
+          class="search_icon"
+          id="search_button"
+        />
+
+        <div class="loader" hidden></div>
       </div>
-    -->
 
       <p class="subtitle work-sans">Search for songs from anywhere!</p>
       <p class="description work-sans">
         Get a shareable link + a custom thumbnail with album art & metadata.
       </p>
+
+      <input
+        type="button"
+        value="Copy Link"
+        class="button"
+        id="button_copy"
+        hidden
+      />
+
+      <input
+        type="button"
+        value="Go to Spotify"
+        class="button"
+        id="button_go"
+        hidden
+      />
     </main>
 
     <footer>
       <p class="footer-text work-sans">© 2024 Vishnu Sanal T</p>
       <a href="https://GitHub.com/VishnuSanal/GeethLe" target="_blank">
-        <img src="{{ url_for('static', filename='github-mark-white.png') }}" class="octocat" />
+        <img
+          src="{{ url_for('static', filename='github-mark-white.png') }}"
+          class="octocat"
+        />
       </a>
     </footer>
   </body>
