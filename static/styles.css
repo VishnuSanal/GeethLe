@@ -13,22 +13,6 @@ body {
   background: linear-gradient(120deg, #ff3366, transparent 70.71%),
     linear-gradient(240deg, #20a4f3, transparent 70.71%),
     linear-gradient(360deg, #8fd0ca, transparent 70.71%);
-
-  /* background-image: conic-gradient(at 50% -10%, #FF6978 35%, #B1EDE8 50%, #FF6978 65%); */
-  /* background-image: conic-gradient(at 50% -10%, #2EC4B6 25%, #FF3366 50%, #20A4F3 75%); */
-  /* background-image: conic-gradient(at 50% -10%, #2EC4B6 25%, #FF3366 50%, #20A4F3 75%); */
-
-  /* background:
-        linear-gradient(-45deg, #8E7AB5, transparent 70.71%),
-        linear-gradient(180deg, #B784B7, transparent 70.71%),
-        linear-gradient(270deg, #E493B3, transparent 70.71%),
-        linear-gradient(360deg, #EEA5A6, transparent 70.71%); */
-
-  /* background:
-        linear-gradient(-45deg, #6867AC, transparent 70.71%),
-        linear-gradient(180deg, #A267AC, transparent 70.71%),
-        linear-gradient(270deg, #CE7BB0, transparent 70.71%),
-        linear-gradient(360deg, #FFBCD1, transparent 70.71%); */
 }
 
 main {
@@ -88,115 +72,6 @@ main {
   font-size: 1.5vw;
   letter-spacing: 0.2vw;
   color: blue;
-}
-
-input[type="text"] {
-  padding: 1vw;
-  font-size: 1.2vw;
-  border: 0.02vw solid white;
-  border-radius: 2vw;
-  background-color: white;
-  width: 40vw;
-  caret-color: gray;
-  color: gray;
-
-  position: relative;
-}
-
-input:focus {
-  outline: none;
-}
-
-input:not(:placeholder-shown) + .placeholder {
-  opacity: 0;
-  transform: scale(0.9);
-}
-
-.container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.placeholder {
-  position: absolute;
-  left: 30%;
-  top: 50%;
-  transform: translateY(-50%);
-
-  pointer-events: none;
-
-  font-size: 1.2vw;
-
-  margin: auto;
-  color: gray;
-}
-
-.hint {
-  font-size: 1.2vw;
-}
-
-.search_icon {
-  height: 2vw;
-  width: 2vw;
-
-  position: absolute;
-  left: 67%;
-  top: 50%;
-  transform: translateY(-50%);
-
-  padding: 1vw;
-
-  margin: auto;
-}
-
-.search_icon:hover {
-  scale: 1.1;
-}
-
-.loader {
-  height: 2vw;
-  width: 2vw;
-
-  position: absolute;
-  left: 68%;
-  top: 45%;
-  transform: translateY(-50%);
-
-  margin: auto;
-
-  border: 0.3vw solid gray;
-  border-top: 0.3vw solid #20a4f3;
-  border-radius: 50%;
-  animation: spin 2s linear infinite;
-}
-
-@keyframes spin {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-}
-
-.button {
-  margin: 0.5vw;
-
-  padding: 1vw;
-  font-size: 1.2vw;
-  border: 0.02vw solid white;
-  border-radius: 2vw;
-  background-color: white;
-  width: 15vw;
-  caret-color: gray;
-  color: gray;
-
-  position: relative;
-}
-
-.button:hover {
-  scale: 1.05;
 }
 
 footer {

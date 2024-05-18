@@ -27,35 +27,12 @@
       href="{{ url_for('static', filename='styles.css') }}"
     />
 
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-
-    <script src="../static/script.js"></script>
-
     <title>Geeth Le</title>
   </head>
 
   <body>
     <main>
-      <img src="" id="album_art" class="album_art" hidden />
-
       <p class="title work-sans">GeethLe</p>
-
-      <!-- <div class="container">
-        <input placeholder="" type="text" id="search_input" />
-
-        <label for="search_input" class="placeholder">
-          <span class="hint blue">https://geethle.onrender.com/</span
-          ><span class="hint">your+fav+song</span>
-        </label>
-
-        <img
-          src="{{ url_for('static', filename='search_icon.png') }}"
-          class="search_icon"
-          id="search_button"
-        />
-
-        <div class="loader" hidden></div>
-      </div> -->
 
       <p class="subtitle work-sans">Search for songs from anywhere!</p>
       <p class="description work-sans">
@@ -63,24 +40,8 @@
       </p>
 
       <p class="explanation work-sans">
-        Get started by typing <span class="blue">geethle.onrender.com/your+fav+song
+        Get started by typing <span class="blue">geethle.onrender.com/your+fav+song</span>
       </p>
-
-      <input
-        type="button"
-        value="Copy Link"
-        class="button"
-        id="button_copy"
-        hidden
-      />
-
-      <input
-        type="button"
-        value="Go to Spotify"
-        class="button"
-        id="button_go"
-        hidden
-      />
     </main>
 
     <footer>
@@ -89,6 +50,7 @@
         <img
           src="{{ url_for('static', filename='github-mark-white.png') }}"
           class="octocat"
+          alt="octocat_github"
         />
       </a>
     </footer>
