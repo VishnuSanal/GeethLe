@@ -7,7 +7,7 @@ from io import BytesIO
 
 import firebase_admin
 import requests
-from PIL import Image, ImageDraw, ImageFont
+from PIL import Image, ImageDraw, ImageFont, ImageFilter
 from dotenv import load_dotenv
 from firebase_admin import credentials
 from firebase_admin import storage
@@ -48,41 +48,45 @@ def generate(entity_id, album, title, artist, thumbnail_url):
     logger.info(f'artist: {artist}')
     logger.info(f'thumbnail_url: {thumbnail_url}')
 
-    frame_image = Image.new(mode='RGB', size=(500, 500), color=(50, 47, 58))
+    frame_image = Image.open(BytesIO(requests.get(thumbnail_url).content)).resize((500, 500))
 
-    draw = ImageDraw.Draw(frame_image)
+    overlay_size = (484, 135)  # 500 - 16
 
-    title_wrapped = textwrap.wrap(title, 15)
-    album_wrapped = textwrap.wrap(album, 20)
-    artist_wrapped = textwrap.wrap(artist, 20)
+    blur_overlay = Image.new(mode='RGBA', size=overlay_size, color=(0, 0, 0))
+
+    overlay_mask = Image.new('L', overlay_size, 0)
+
+    rounded_rect_draw = ImageDraw.Draw(overlay_mask)
+    rounded_rect_draw.rounded_rectangle(((0, 0), overlay_size), 12, fill=127)
+
+    overlay_mask.filter(ImageFilter.BLUR).convert("RGBA")
+
+    frame_image.paste(blur_overlay, (8, 357), overlay_mask)
+
+    text_draw = ImageDraw.Draw(frame_image)
+
+    title_wrapped = textwrap.wrap(title, 29)
+    album_wrapped = textwrap.wrap(album, 25)
+    artist_wrapped = textwrap.wrap(artist, 25)
 
     if len(title_wrapped) > 1:
-        title_wrapped[0] = title_wrapped[0][0:16] + " ..."
+        title_wrapped[0] = title_wrapped[0][0:25] + " ..."
 
     if len(album_wrapped) > 1:
-        album_wrapped[0] = album_wrapped[0][0:16] + " ..."
+        album_wrapped[0] = album_wrapped[0][0:21] + " ..."
 
     if len(artist_wrapped) > 1:
-        artist_wrapped[0] = artist_wrapped[0][0:16] + " ..."
+        artist_wrapped[0] = artist_wrapped[0][0:21] + " ..."
 
     description_wrapped = f'{album_wrapped[0]} • {artist_wrapped[0]}'
 
-    draw.text(xy=(250, 400), align='centre', text=title_wrapped[0], fill=(233, 227, 241),
-              font=ImageFont.truetype('poppins.ttf', 44),
-              anchor="mm")
+    text_draw.text(xy=(250, 415), align='centre', text=title_wrapped[0], fill=(233, 227, 241),
+                   font=ImageFont.truetype('poppins.ttf', 32),
+                   anchor="mm")
 
-    draw.text(xy=(250, 450), align='centre', text=description_wrapped, fill=(233, 227, 241),
-              font=ImageFont.truetype('poppins.ttf', 24),
-              anchor="mm")
-
-    album_art = Image.open(BytesIO(requests.get(thumbnail_url).content)).resize((250, 250))
-
-    size = (250, 250)
-    mask = Image.new('L', size, 0)
-    draw = ImageDraw.Draw(mask)
-    draw.rounded_rectangle(((0, 0), (250, 250)), 12, fill="white")
-
-    frame_image.paste(album_art, (125, 75), mask)
+    text_draw.text(xy=(250, 455), align='centre', text=description_wrapped, fill=(233, 227, 241),
+                   font=ImageFont.truetype('poppins.ttf', 18),
+                   anchor="mm")
 
     frame_image_url = upload_frame(entity_id, frame_image)
 
