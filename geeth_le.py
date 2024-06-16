@@ -81,11 +81,11 @@ def generate(entity_id, album, title, artist, thumbnail_url):
     description_wrapped = f'{album_wrapped[0]} • {artist_wrapped[0]}'
 
     text_draw.text(xy=(250, 415), align='centre', text=title_wrapped[0], fill=(233, 227, 241),
-                   font=ImageFont.truetype('poppins.ttf', 32),
+                   font=ImageFont.truetype('geist_regular.ttf', 32),
                    anchor="mm")
 
     text_draw.text(xy=(250, 455), align='centre', text=description_wrapped, fill=(233, 227, 241),
-                   font=ImageFont.truetype('poppins.ttf', 18),
+                   font=ImageFont.truetype('geist_regular.ttf', 18),
                    anchor="mm")
 
     frame_image_url = upload_frame(entity_id, frame_image)
