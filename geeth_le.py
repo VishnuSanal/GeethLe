@@ -179,7 +179,47 @@ def generate_from_spotify(spotify_track_id):
     return title, f'{album} • {artist}', frame_image_url, f'https://open.spotify.com/track/{spotify_track_id}'
 
 
-def search_music(query):
+def get_youtube_link(spotify_link):
+    logger.info("#get_youtube_link")
+
+    odesli_request_url = "https://api.song.link/v1-alpha.1/links?userCountry=IN&url=" + spotify_link
+
+    logger.info(f'odesli_request_url: {odesli_request_url}')
+
+    odesli_request = requests.get(odesli_request_url)
+
+    if odesli_request.status_code != 200:
+        logger.error("Odesli request failed: " + str(odesli_request.status_code))
+        exit(1)
+
+    odesli_response_json = odesli_request.json()
+
+    print(odesli_response_json)
+
+    return odesli_response_json["linksByPlatform"]["youtube"]["url"]
+
+
+def get_youtube_music_link(spotify_link):
+    logger.info("#get_youtube_music_link")
+
+    odesli_request_url = "https://api.song.link/v1-alpha.1/links?userCountry=IN&url=" + spotify_link
+
+    logger.info(f'odesli_request_url: {odesli_request_url}')
+
+    odesli_request = requests.get(odesli_request_url)
+
+    if odesli_request.status_code != 200:
+        logger.error("Odesli request failed: " + str(odesli_request.status_code))
+        exit(1)
+
+    odesli_response_json = odesli_request.json()
+
+    print(odesli_response_json)
+
+    return odesli_response_json["linksByPlatform"]["youtubeMusic"]["url"]
+
+
+def search_music(target, query):
     logger.info("#search_music")
 
     search_request_url = "https://api.spotify.com/v1/search?type=track&limit=1&market=IN&q=" + query
@@ -227,4 +267,12 @@ def search_music(query):
 
     frame_image_url = generate(spotify_track_id, album, title, artist, thumbnail_url)
 
-    return title, f'{album} • {artist}', frame_image_url, f'https://open.spotify.com/track/{spotify_track_id}'
+    spotify_link = f'https://open.spotify.com/track/{spotify_track_id}'
+
+    if target == "yt" or target == "youtube":
+        return title, f'{album} • {artist}', frame_image_url, get_youtube_link(spotify_link)
+
+    if target == "ytm" or target == "youtubemusic":
+        return title, f'{album} • {artist}', frame_image_url, get_youtube_music_link(spotify_link)
+
+    return title, f'{album} • {artist}', frame_image_url, spotify_link
