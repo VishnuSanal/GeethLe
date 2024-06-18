@@ -1,23 +1,20 @@
 # GeethLe (गीत ले)
 
-## Forget the Search, Play the Vibe!
+## Forget the Search, Play the Vibe! Get music from **anywhere**!
 
 ### What?
 
-A simple service to search for music from anywhere
-
-### Why?
-
-Sooo, assume you're talking to someone over WhatsApp & want to mention about a song. And, ofcourse you're too lazy to go find the link. :D Don't worry, I have your back!
+Sooo, say you're talking to someone over WhatsApp & want to mention about a song. And, ofcourse you're too lazy to go find the link. :D Don't worry, I have your back!
 
 ```https://geethle.onrender.com/<query>```
 
-Append your search query & it finds the track, generates a custom thumbnail with metadata + it redirects to Spotify once you click on the link. 🙂
+GeethLe finds the track, generates a custom thumbnail with metadata + it redirects to your favorite provider once you click on the link. 🙂
 
-### Anything else?
+### How to use?
 
 #### Get links to Spotify with:
 
+- ```https://geethle.onrender.com/<query>```
 - ```https://geethle.onrender.com/sp/<query>```
 - ```https://geethle.onrender.com/spotify/<query>```
 
