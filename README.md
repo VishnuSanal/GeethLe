@@ -1,5 +1,7 @@
 # GeethLe (गीत ले)
 
+## Forget the Search, Play the Vibe!
+
 ### What?
 
 A simple service to search for music from anywhere
