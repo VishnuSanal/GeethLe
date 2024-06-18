@@ -41,3 +41,9 @@ GeethLe finds the track, generates a custom thumbnail with metadata + it redirec
 - **[@AkashChand6n](https://github.com/AkashChand6n)** with whose convo lead me to this idea ;__;
 - **[@AbhiramVAnand](https://github.com/AbhiramVAnand)** for helping me with stuff
 - **[@anima-regem](https://github.com/anima-regem)**, **[@AbhiramKunnath](https://github.com/AbhiramKunnath)** & **[@SherhinShoukath](https://github.com/SherhinShoukath)** for suggestions & feedback
+
+### Example
+
+<p align="center">
+  <img src="https://github.com/VishnuSanal/GeethLe/assets/50027064/fff158c9-3bd0-4f6d-877b-6f2359a84b5d" height=600 style="pointer-events: none;  cursor: default;" />
+</p>
