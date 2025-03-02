@@ -1,12 +1,10 @@
-# GeethLe (गीत ले)
-
-## Forget the Search, Play the Vibe! Get music from **anywhere**!
+# GeethLe (गीत ले) - Search for Songs from **Anywhere**!
 
 ### What?
 
-Sooo, say you're talking to someone over WhatsApp & want to mention about a song. And, ofcourse you're too lazy to go find the link. :D Don't worry, I have your back!
+Sooo, say you're talking to someone over WhatsApp & want to mention about a song. And, you're too lazy to go find the link. :D Don't worry, I have your back!
 
-```https://geethle.onrender.com/<query>```
+```https://geethle.me/<query>```
 
 GeethLe finds the track, generates a custom thumbnail with metadata + it redirects to your favorite provider once you click on the link. 🙂
 
@@ -14,24 +12,24 @@ GeethLe finds the track, generates a custom thumbnail with metadata + it redirec
 
 #### Get links to Spotify with:
 
-- ```https://geethle.onrender.com/<query>```
-- ```https://geethle.onrender.com/sp/<query>```
-- ```https://geethle.onrender.com/spotify/<query>```
+- ```https://geethle.me/<query>```
+- ```https://geethle.me/sp/<query>```
+- ```https://geethle.me/spotify/<query>```
 
 #### Get links to Youtube with:
 
-- ```https://geethle.onrender.com/yt/<query>```
-- ```https://geethle.onrender.com/youtube/<query>```
+- ```https://geethle.me/yt/<query>```
+- ```https://geethle.me/youtube/<query>```
 
 #### Get links to Youtube Music with:
 
-- ```https://geethle.onrender.com/ytm/<query>```
-- ```https://geethle.onrender.com/youtubemusic/<query>```
+- ```https://geethle.me/ytm/<query>```
+- ```https://geethle.me/youtubemusic/<query>```
   
 #### Get the details and redirection using Youtube/Spotify IDs:
 
-- ```https://geethle.onrender.com/yt_id/<youtube-id>```
-- ```https://geethle.onrender.com/sp_id/<spotify-id>```
+- ```https://geethle.me/yt_id/<youtube-id>```
+- ```https://geethle.me/sp_id/<spotify-id>```
 
 ### Credits
 
