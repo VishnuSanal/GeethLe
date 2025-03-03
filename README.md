@@ -2,6 +2,8 @@
 
 ### What?
 
+GeethLe makes sharing music easy! Search for any song from anywhere with geethle.me/<your+fav+song> and instantly get a permalink to the song along with a thumbnail with metadata. It’ll redirect you to your favorite music provider, saving time when sharing tracks.
+
 Sooo, say you're talking to someone over WhatsApp & want to mention about a song. And, you're too lazy to go find the link. :D Don't worry, I have your back!
 
 ```https://geethle.me/<query>```
