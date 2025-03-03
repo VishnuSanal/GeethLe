@@ -1,58 +1,92 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-    <title>GeethLe</title>
-    <meta name="description" content="Search for songs from anywhere!" />
-
-    <meta property="og:url" content="https://geethle.me" />
-    <meta property="og:type" content="website" />
-    <meta property="og:title" content="GeethLe" />
-    <meta property="og:description" content="Search for songs from anywhere!" />
-
-    <meta name="twitter:card" content="summary" />
-    <meta property="twitter:domain" content="geethle.me" />
-    <meta property="twitter:url" content="https://geethle.me/" />
-
-    <meta name="twitter:title" content="GeethLe" />
-    <meta
-      name="twitter:description"
-      content="Search for songs from anywhere!"
-    />
-
-    <link
-      rel="stylesheet"
-      href="{{ url_for('static', filename='styles.css') }}"
-    />
-
-    <title>Geeth Le</title>
-  </head>
-
-  <body>
-    <main>
-      <p class="title work-sans">GeethLe</p>
-
-      <p class="subtitle work-sans">Search for songs from anywhere!</p>
-      <p class="description work-sans">
-        Get a shareable link + a custom thumbnail with album art & metadata.
-      </p>
-
-      <p class="explanation work-sans">
-        Get started by typing <span class="blue">geethle.me/your+fav+song</span>
-      </p>
-    </main>
-
-    <footer>
-      <p class="footer-text work-sans">© 2024 Vishnu Sanal T</p>
-      <a href="https://GitHub.com/VishnuSanal/GeethLe" target="_blank">
-        <img
-          src="{{ url_for('static', filename='github-mark-white.png') }}"
-          class="octocat"
-          alt="octocat_github"
-        />
-      </a>
-    </footer>
-  </body>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GeethLe - Search for Songs</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+            background-color: #09090B;
+            color: #ffffff;
+        }
+        h1 {
+            text-align: center;
+        }
+        pre {
+            background: #18181B;
+            padding: 10px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+        .credits a {
+            text-decoration: none;
+            color: #007BFF;
+        }
+        .example img {
+            max-width: 50%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+        }
+        .github-link {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .github-link a {
+            text-decoration: none;
+            color: #007BFF;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>GeethLe (गीत ले) - Search for Songs from <strong>Anywhere</strong>!</h1>
+    
+    <h2>What?</h2>
+    <p>Sooo, say you're talking to someone over WhatsApp & want to mention a song. And, you're too lazy to go find the link. :D Don't worry, I have your back!</p>
+    <pre>https://geethle.me/&lt;your+fav+song&gt;</pre>
+    <p>GeethLe finds the track, generates a custom thumbnail with metadata + it redirects to your favorite provider once you click on the link. 🙂</p>
+    
+    <h2>How to use?</h2>
+    <h3>Get links to Spotify with:</h3>
+    <pre>https://geethle.me/&lt;query&gt;
+https://geethle.me/sp/&lt;query&gt;
+https://geethle.me/spotify/&lt;query&gt;</pre>
+    
+    <h3>Get links to Youtube with:</h3>
+    <pre>https://geethle.me/yt/&lt;query&gt;
+https://geethle.me/youtube/&lt;query&gt;</pre>
+    
+    <h3>Get links to Youtube Music with:</h3>
+    <pre>https://geethle.me/ytm/&lt;query&gt;
+https://geethle.me/youtubemusic/&lt;query&gt;</pre>
+    
+    <h3>Get the details and redirection using Youtube/Spotify IDs:</h3>
+    <pre>https://geethle.me/yt_id/&lt;youtube-id&gt;
+https://geethle.me/sp_id/&lt;spotify-id&gt;</pre>
+    
+    <h2>Credits</h2>
+    <ul class="credits">
+        <li>Uses the <a href="https://developer.spotify.com/" target="_blank">Spotify API</a> to fetch music metadata.</li>
+        <li>Uses <a href="https://odesli.co/" target="_blank">Odesli API</a> to get the Spotify ID from YouTube ID.</li>
+        <li>Uses <a href="https://vercel.com/font" target="_blank">Geist font</a> for the thumbnails.</li>
+        <li><a href="https://github.com/AkashChand6n" target="_blank">@AkashChand6n</a> with whose convo led me to this idea ;__;</li>
+        <li><a href="https://github.com/AbhiramVAnand" target="_blank">@AbhiramVAnand</a> for helping me with stuff</li>
+        <li><a href="https://github.com/anima-regem" target="_blank">@anima-regem</a>, <a href="https://github.com/AbhiramKunnath" target="_blank">@AbhiramKunnath</a> & <a href="https://github.com/SherhinShoukath" target="_blank">@SherhinShoukath</a> for suggestions & feedback</li>
+    </ul>
+    
+    <h2>Example</h2>
+    <p align="center" class="example">
+        <img src="https://github.com/user-attachments/assets/2c8c6a41-5616-4727-ad5c-12c5ff1eba7f" alt="Example" />
+    </p>
+    
+    <div class="github-link">
+        <p>Check out the source code on <a href="https://github.com/VishnuSanal/GeethLe" target="_blank">GitHub</a>.</p>
+    </div>
+</body>
 </html>

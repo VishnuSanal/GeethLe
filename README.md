@@ -43,5 +43,5 @@ GeethLe finds the track, generates a custom thumbnail with metadata + it redirec
 ### Example
 
 <p align="center">
-  <img src="https://github.com/VishnuSanal/GeethLe/assets/50027064/fff158c9-3bd0-4f6d-877b-6f2359a84b5d" height=600 style="pointer-events: none;  cursor: default;" />
+  <img src="https://github.com/user-attachments/assets/2c8c6a41-5616-4727-ad5c-12c5ff1eba7f" height=600 style="pointer-events: none;  cursor: default;" />
 </p>
