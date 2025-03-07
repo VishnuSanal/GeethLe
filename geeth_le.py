@@ -40,13 +40,15 @@ def upload_frame(video_id, frame_image):
 
 
 def generate(entity_id, album, title, artist, thumbnail_url):
-    logger.info("#generate")
-
-    logger.info(f'entity_id: {entity_id}')
-    logger.info(f'album: {album}')
-    logger.info(f'title: {title}')
-    logger.info(f'artist: {artist}')
-    logger.info(f'thumbnail_url: {thumbnail_url}')
+    logger.info(
+        f'''#generate: {{
+            "entity_id": "{entity_id}",
+            "album": "{album}",
+            "title": "{title}",
+            "artist": "{artist}",
+            "thumbnail_url": "{thumbnail_url}"
+        }}'''
+    )
 
     frame_image = Image.open(BytesIO(requests.get(thumbnail_url).content)).resize((500, 500))
 
