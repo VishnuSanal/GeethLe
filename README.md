@@ -2,11 +2,11 @@
 
 ### What?
 
-GeethLe makes sharing music easy! Search for any song from anywhere with geethle.me/<your+fav+song> and instantly get a permalink to the song along with a thumbnail with metadata. It’ll redirect you to your favorite music provider, saving time when sharing tracks.
+GeethLe makes sharing music easy! Search for any song from anywhere with geethle.tech/<your+fav+song> and instantly get a permalink to the song along with a thumbnail with metadata. It’ll redirect you to your favorite music provider, saving time when sharing tracks.
 
 Sooo, say you're talking to someone over WhatsApp & want to mention about a song. And, you're too lazy to go find the link. :D Don't worry, I have your back!
 
-```https://geethle.me/<query>```
+```https://geethle.tech/<query>```
 
 GeethLe finds the track, generates a custom thumbnail with metadata + it redirects to your favorite provider once you click on the link. 🙂
 
@@ -14,24 +14,24 @@ GeethLe finds the track, generates a custom thumbnail with metadata + it redirec
 
 #### Get links to Spotify with:
 
-- ```https://geethle.me/<query>```
-- ```https://geethle.me/sp/<query>```
-- ```https://geethle.me/spotify/<query>```
+- ```https://geethle.tech/<query>```
+- ```https://geethle.tech/sp/<query>```
+- ```https://geethle.tech/spotify/<query>```
 
 #### Get links to Youtube with:
 
-- ```https://geethle.me/yt/<query>```
-- ```https://geethle.me/youtube/<query>```
+- ```https://geethle.tech/yt/<query>```
+- ```https://geethle.tech/youtube/<query>```
 
 #### Get links to Youtube Music with:
 
-- ```https://geethle.me/ytm/<query>```
-- ```https://geethle.me/youtubemusic/<query>```
+- ```https://geethle.tech/ytm/<query>```
+- ```https://geethle.tech/youtubemusic/<query>```
   
 #### Get the details and redirection using Youtube/Spotify IDs:
 
-- ```https://geethle.me/yt_id/<youtube-id>```
-- ```https://geethle.me/sp_id/<spotify-id>```
+- ```https://geethle.tech/yt_id/<youtube-id>```
+- ```https://geethle.tech/sp_id/<spotify-id>```
 
 ### Credits
 
