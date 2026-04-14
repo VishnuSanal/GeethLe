@@ -33,6 +33,77 @@ GeethLe finds the track, generates a custom thumbnail with metadata + it redirec
 - ```https://geethle.tech/yt_id/<youtube-id>```
 - ```https://geethle.tech/sp_id/<spotify-id>```
 
+### Architecture
+
+```
+                        ┌──────────────────────────────────────────────┐
+                        │              geethle.tech                    │
+                        └──────────────────┬───────────────────────────┘
+                                           │
+                           ┌───────────────┼───────────────┐
+                           ▼               ▼               ▼
+                      /<query>        /yt_id/<id>     /sp_id/<id>
+                      /sp/<query>
+                      /yt/<query>
+                      /ytm/<query>
+                           │               │               │
+                           ▼               ▼               ▼
+                   ┌───────────────────────────────────────────────┐
+                   │                  app.py                       │
+                   │              (Flask Routes)                   │
+                   └───────────────────┬───────────────────────────┘
+                                       │
+                                       ▼
+                   ┌───────────────────────────────────────────────┐
+                   │               geeth_le.py                     │
+                   │           (Core Business Logic)               │
+                   │                                               │
+                   │  search_music()  ──► Spotify Search API       │
+                   │  generate_from_youtube() ──► Odesli API       │
+                   │  generate_from_spotify()                      │
+                   │         │                                     │
+                   │         ▼                                     │
+                   │  ┌─────────────────────────────────┐         │
+                   │  │  generate()                      │         │
+                   │  │  Download album art              │         │
+                   │  │  Overlay title + artist + album  │         │
+                   │  │  (Pillow + Geist font)           │         │
+                   │  └────────────┬────────────────────┘         │
+                   │               ▼                               │
+                   │  ┌─────────────────────────────────┐         │
+                   │  │  upload_frame()                   │         │
+                   │  │  Upload to Firebase Storage       │         │
+                   │  │  Return signed URL (15-day TTL)   │         │
+                   │  └─────────────────────────────────┘         │
+                   └───────────────────┬───────────────────────────┘
+                                       │
+                                       ▼
+                   ┌───────────────────────────────────────────────┐
+                   │            index.html (Template)              │
+                   │                                               │
+                   │  - OG / Twitter Card meta tags                │
+                   │    (title, description, thumbnail URL)        │
+                   │  - JS redirect to target platform             │
+                   └───────────────────┬───────────────────────────┘
+                                       │
+                           ┌───────────┼───────────┐
+                           ▼           ▼           ▼
+                       Spotify      YouTube    YouTube Music
+```
+
+```
+External APIs:
+
+  ┌──────────────┐    ┌──────────────┐    ┌──────────────────────┐
+  │  Spotify API  │    │  Odesli API  │    │  Firebase Storage    │
+  │              │    │  (song.link) │    │                      │
+  │  - Search    │    │              │    │  - Thumbnail hosting │
+  │  - Metadata  │    │  - YT → SP   │    │  - Signed URLs       │
+  │  - Album art │    │  - SP → YT   │    │                      │
+  │              │    │  - SP → YTM  │    │                      │
+  └──────────────┘    └──────────────┘    └──────────────────────┘
+```
+
 ### Credits
 
 - Uses the [Spotify API](https://developer.spotify.com/) to fetch music metadata.
