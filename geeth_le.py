@@ -5,36 +5,44 @@ import tempfile
 import textwrap
 from io import BytesIO
 
-import firebase_admin
 import requests
 from PIL import Image, ImageDraw, ImageFont, ImageFilter
 from dotenv import load_dotenv
-from firebase_admin import credentials
-from firebase_admin import storage
+
+from supabase import create_client, Client
 
 load_dotenv()
 
-BASE_URL = os.getenv('BASE_URL')
-
-firebase_admin.initialize_app(
-    credentials.Certificate('service_account_key.json'),
-    {'storageBucket': BASE_URL}
+supabase: Client = create_client(
+    os.getenv("SUPABASE_URL"),
+    os.getenv("SUPABASE_KEY")
 )
 
 logger = logging.getLogger(__name__)
 logging.basicConfig(level=logging.INFO)
 
+def supabase_upload_frame(video_id, frame_image):
+    path = f"{video_id}.png"
+    bucket = supabase.storage.from_("GeethLe")
 
-def upload_frame(video_id, frame_image):
-    blob = storage.bucket().blob(video_id + ".png")
+    if not _supabase_thumb_exists(bucket, path):
+        buffer = BytesIO()
+        frame_image.save(buffer, format="PNG")
 
-    if not blob.exists():
-        temp_file = tempfile.NamedTemporaryFile(suffix=".png")
-        frame_image.save(temp_file.name)
+        bucket.upload(
+            path=path,
+            file=buffer.getvalue(),
+            file_options={"content-type": "image/png"},
+        )
 
-        blob.upload_from_file(file_obj=temp_file, content_type="image/png")
+    # expires_in is in SECONDS; 15 days = 15 * 24 * 60 * 60
+    res = bucket.create_signed_url(path, 60 * 60 * 24 * 15)
+    return res["signedURL"]
 
-    return blob.generate_signed_url(datetime.timedelta(days=15))
+
+def _supabase_thumb_exists(bucket, path):
+    folder, _, name = path.rpartition("/")
+    return any(f["name"] == name for f in bucket.list(folder))
 
 
 def generate(entity_id, album, title, artist, thumbnail_url):
@@ -88,7 +96,7 @@ def generate(entity_id, album, title, artist, thumbnail_url):
                    font=ImageFont.truetype('geist_medium.ttf', 18),
                    anchor="mm")
 
-    frame_image_url = upload_frame(entity_id, frame_image)
+    frame_image_url = supabase_upload_frame(entity_id, frame_image)
 
     logger.info(f'frame_image_url: {frame_image_url}')
 
@@ -256,6 +264,7 @@ def search_music(target, query):
 
     odesli_response_json = odesli_request.json()
 
+    # fixme: no spotify entity exists!
     odesli_spotify_unique_id = odesli_response_json["linksByPlatform"]["spotify"]["entityUniqueId"]
 
     odesli_spotify_entity = odesli_response_json["entitiesByUniqueId"][odesli_spotify_unique_id]

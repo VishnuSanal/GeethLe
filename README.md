@@ -74,7 +74,7 @@ GeethLe finds the track, generates a custom thumbnail with metadata + it redirec
                    │               ▼                              │
                    │  ┌─────────────────────────────────┐         │
                    │  │  upload_frame()                 │         │
-                   │  │  Upload to Firebase Storage     │         │
+                   │  │  Upload to Supabase Storage     │         │
                    │  │  Return signed URL (15-day TTL) │         │
                    │  └─────────────────────────────────┘         │
                    └───────────────────┬──────────────────────────┘
@@ -97,7 +97,7 @@ GeethLe finds the track, generates a custom thumbnail with metadata + it redirec
 External APIs:
 
   ┌──────────────┐    ┌──────────────┐    ┌──────────────────────┐
-  │  iTunes API  │    │  Odesli API  │    │  Firebase Storage    │
+  │  iTunes API  │    │  Odesli API  │    │  Supabase Storage    │
   │              │    │  (song.link) │    │                      │
   │  - Search    │    │              │    │  - Thumbnail hosting │
   │  - Metadata  │    │  - YT → SP   │    │  - Signed URLs       │
