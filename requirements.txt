@@ -4,3 +4,4 @@ requests==2.34.2
 Pillow==12.2.0
 supabase==2.30.0
 python-dotenv==1.2.2
+ytmusicapi==1.12.0

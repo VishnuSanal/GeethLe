@@ -8,6 +8,7 @@ from io import BytesIO
 import requests
 from PIL import Image, ImageDraw, ImageFont, ImageFilter
 from dotenv import load_dotenv
+from ytmusicapi import YTMusic
 
 from supabase import create_client, Client
 
@@ -17,6 +18,8 @@ supabase: Client = create_client(
     os.getenv("SUPABASE_URL"),
     os.getenv("SUPABASE_KEY")
 )
+
+yt = YTMusic()
 
 logger = logging.getLogger(__name__)
 logging.basicConfig(level=logging.INFO)
@@ -44,6 +47,13 @@ def _supabase_thumb_exists(bucket, path):
     folder, _, name = path.rpartition("/")
     return any(f["name"] == name for f in bucket.list(folder))
 
+def _find_yt_music_link(artist, title):
+    logger.info("#find_yt_music_link")
+
+    results = yt.search(f"{artist} {title}", filter="songs", limit=1)
+
+    youtube_id = results[0]["videoId"]
+    return f"https://music.youtube.com/watch?v={youtube_id}"
 
 def generate(entity_id, album, title, artist, thumbnail_url):
     logger.info(
@@ -56,7 +66,14 @@ def generate(entity_id, album, title, artist, thumbnail_url):
         }}'''
     )
 
-    frame_image = Image.open(BytesIO(requests.get(thumbnail_url).content)).resize((500, 500))
+    thumbnail_512_request = requests.get(thumbnail_url.replace("100x100bb.jpg", "512x512bb.jpg"))
+
+    if thumbnail_512_request.status_code == 200:
+        thumbnail_content = thumbnail_512_request.content
+    else:
+        thumbnail_content = requests.get(thumbnail_url_512).content
+
+    frame_image = Image.open(BytesIO(thumbnail_content)).resize((500, 500))
 
     overlay_size = (484, 135)  # 500 - 16
 
@@ -250,33 +267,14 @@ def search_music(target, query):
     album = song_result_object["collectionName"]
     thumbnail_url = song_result_object["artworkUrl100"]
 
-    odesli_request_url = "https://api.song.link/v1-alpha.1/links?platform=itunes&type=song&id=" + itunes_song_id
-
-    logger.info(f'odesli_request_url: {odesli_request_url}')
-
-    odesli_request = requests.get(odesli_request_url)
-
-    if odesli_request.status_code != 200:
-        logger.error("Odesli request failed: " + str(odesli_request.status_code))
-        exit(1)
-
     frame_image_url = generate(itunes_song_id, album, title, artist, thumbnail_url)
 
-    odesli_response_json = odesli_request.json()
+    yt_link = _find_yt_music_link(artist, title)
 
-    # fixme: no spotify entity exists!
-    odesli_spotify_unique_id = odesli_response_json["linksByPlatform"]["spotify"]["entityUniqueId"]
+    # if target == "yt" or target == "youtube":
+    #     return title, f'{album} • {artist}', frame_image_url, get_youtube_link(spotify_link)
 
-    odesli_spotify_entity = odesli_response_json["entitiesByUniqueId"][odesli_spotify_unique_id]
+    # if target == "ytm" or target == "youtubemusic":
+    #     return title, f'{album} • {artist}', frame_image_url, get_youtube_music_link(spotify_link)
 
-    spotify_track_id = odesli_spotify_entity["id"]
-
-    spotify_link = f'https://open.spotify.com/track/{spotify_track_id}'
-
-    if target == "yt" or target == "youtube":
-        return title, f'{album} • {artist}', frame_image_url, get_youtube_link(spotify_link)
-
-    if target == "ytm" or target == "youtubemusic":
-        return title, f'{album} • {artist}', frame_image_url, get_youtube_music_link(spotify_link)
-
-    return title, f'{album} • {artist}', frame_image_url, spotify_link
+    return title, f'{album} • {artist}', frame_image_url, yt_link
