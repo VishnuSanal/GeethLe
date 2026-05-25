@@ -1,6 +1,6 @@
 # GeethLe (गीत ले) - Search for Songs from **Anywhere**!
 
-> :warning: This project stopped working due to the latest changes to the Spotify API switching to a paid-only model. Working on figuring out a fix - but might take a bit of time! more details on <a href=https://github.com/VishnuSanal/GeethLe/issues/2>this issue</a>
+> :warning: some features stopped working due to the latest changes to the Spotify API switching to a paid-only model. Working on figuring out a fix - but might take a bit of time! more details on <a href=https://github.com/VishnuSanal/GeethLe/issues/2>this issue</a>
 
 ### What?
 
