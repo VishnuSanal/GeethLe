@@ -56,28 +56,28 @@ GeethLe finds the track, generates a custom thumbnail with metadata + it redirec
                    └───────────────────┬───────────────────────────┘
                                        │
                                        ▼
-                   ┌───────────────────────────────────────────────┐
-                   │               geeth_le.py                     │
-                   │           (Core Business Logic)               │
-                   │                                               │
-                   │  search_music()  ──► Spotify Search API       │
-                   │  generate_from_youtube() ──► Odesli API       │
-                   │  generate_from_spotify()                      │
-                   │         │                                     │
-                   │         ▼                                     │
+                   ┌──────────────────────────────────────────────┐
+                   │               geeth_le.py                    │
+                   │           (Core Business Logic)              │
+                   │                                              │
+                   │  search_music()  ──► iTunes Search API       │
+                   │  generate_from_youtube() ──► Odesli API      │
+                   │  generate_from_spotify()                     │
+                   │         │                                    │
+                   │         ▼                                    │
                    │  ┌─────────────────────────────────┐         │
-                   │  │  generate()                      │         │
-                   │  │  Download album art              │         │
-                   │  │  Overlay title + artist + album  │         │
-                   │  │  (Pillow + Geist font)           │         │
+                   │  │  generate()                     │         │
+                   │  │  Download album art             │         │
+                   │  │  Overlay title + artist + album │         │
+                   │  │  (Pillow + Geist font)          │         │
                    │  └────────────┬────────────────────┘         │
-                   │               ▼                               │
+                   │               ▼                              │
                    │  ┌─────────────────────────────────┐         │
-                   │  │  upload_frame()                   │         │
-                   │  │  Upload to Firebase Storage       │         │
-                   │  │  Return signed URL (15-day TTL)   │         │
+                   │  │  upload_frame()                 │         │
+                   │  │  Upload to Firebase Storage     │         │
+                   │  │  Return signed URL (15-day TTL) │         │
                    │  └─────────────────────────────────┘         │
-                   └───────────────────┬───────────────────────────┘
+                   └───────────────────┬──────────────────────────┘
                                        │
                                        ▼
                    ┌───────────────────────────────────────────────┐
@@ -97,7 +97,7 @@ GeethLe finds the track, generates a custom thumbnail with metadata + it redirec
 External APIs:
 
   ┌──────────────┐    ┌──────────────┐    ┌──────────────────────┐
-  │  Spotify API  │    │  Odesli API  │    │  Firebase Storage    │
+  │  iTunes API  │    │  Odesli API  │    │  Firebase Storage    │
   │              │    │  (song.link) │    │                      │
   │  - Search    │    │              │    │  - Thumbnail hosting │
   │  - Metadata  │    │  - YT → SP   │    │  - Signed URLs       │

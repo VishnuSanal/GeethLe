@@ -14,8 +14,6 @@ from firebase_admin import storage
 
 load_dotenv()
 
-SPOTIFY_CLIENT_ID = os.getenv('SPOTIFY_CLIENT_ID')
-SPOTIFY_CLIENT_SECRET = os.getenv('SPOTIFY_CLIENT_SECRET')
 BASE_URL = os.getenv('BASE_URL')
 
 firebase_admin.initialize_app(
@@ -100,9 +98,7 @@ def generate(entity_id, album, title, artist, thumbnail_url):
 def generate_from_youtube(video_id):
     logger.info("#generate_from_youtube")
 
-    link = "https://www.youtube.com/watch?v=" + video_id
-
-    odesli_request_url = "https://api.song.link/v1-alpha.1/links?userCountry=IN&url=" + link
+    odesli_request_url = "https://api.song.link/v1-alpha.1/links?platform=youtube&type=song&id=" + video_id
 
     logger.info(f'odesli_request_url: {odesli_request_url}')
 
@@ -114,37 +110,30 @@ def generate_from_youtube(video_id):
 
     odesli_response_json = odesli_request.json()
 
-    odesli_spotify_unique_id = odesli_response_json["linksByPlatform"]["spotify"]["entityUniqueId"]
+    odesli_itunes_unique_id = odesli_response_json["linksByPlatform"]["itunes"]["entityUniqueId"]
 
-    odesli_spotify_entity = odesli_response_json["entitiesByUniqueId"][odesli_spotify_unique_id]
+    odesli_itunes_entity = odesli_response_json["entitiesByUniqueId"][odesli_itunes_unique_id]
 
-    spotify_track_id = odesli_spotify_entity["id"]
+    itunes_track_id = odesli_itunes_entity["id"]
 
-    spotify_request_url = "https://api.spotify.com/v1/tracks/" + spotify_track_id
+    itunes_search_request_url = "https://itunes.apple.com/search?media=music&entity=song&attribute=songTerm&limit=1&term=" + query
 
-    logger.info(f'spotify_request_url: {spotify_request_url}')
+    logger.info(f'itunes_search_request_url: {itunes_search_request_url}')
 
-    access_token = requests.post(
-        "https://accounts.spotify.com/api/token",
-        headers={"Content-Type": "application/x-www-form-urlencoded"},
-        data=f'grant_type=client_credentials&client_id={SPOTIFY_CLIENT_ID}&client_secret={SPOTIFY_CLIENT_SECRET}'
-    ).json()["access_token"]
+    itunes_search_request = requests.get(itunes_search_request_url)
 
-    spotify_request = requests.get(spotify_request_url,
-                                   headers={"Authorization": f'Bearer {access_token}'})
-
-    if spotify_request.status_code != 200:
-        logger.error("Spotify request failed: " + str(spotify_request.status_code))
+    if itunes_search_request.status_code != 200:
+        logger.error("iTunes request failed: " + str(itunes_search_request.status_code))
         exit(1)
 
-    spotify_response_json = spotify_request.json()
+    song_result_object = itunes_search_request.json()["results"][0]
 
-    title = spotify_response_json["name"]
-    artist = spotify_response_json["artists"][0]["name"]
-    album = spotify_response_json["album"]["name"]
-    thumbnail_url = spotify_response_json["album"]["images"][0]["url"]
+    title = song_result_object["trackName"]
+    artist = song_result_object["artistName"]
+    album = song_result_object["collectionName"]
+    thumbnail_url = song_result_object["artworkUrl100"]
 
-    frame_image_url = generate(video_id, album, title, artist, thumbnail_url)
+    frame_image_url = generate(itunes_track_id, album, title, artist, thumbnail_url)
 
     return title, f'{album} • {artist}', frame_image_url, f'http://youtu.be/{video_id}'
 
@@ -152,31 +141,42 @@ def generate_from_youtube(video_id):
 def generate_from_spotify(spotify_track_id):
     logger.info("#generate_from_spotify")
 
-    spotify_request_url = "https://api.spotify.com/v1/tracks/" + spotify_track_id
+    odesli_request_url = "https://api.song.link/v1-alpha.1/links?platform=spotify&type=song&id=" + spotify_track_id
 
-    logger.info(f'spotify_request_url: {spotify_request_url}')
+    logger.info(f'odesli_request_url: {odesli_request_url}')
 
-    access_token = requests.post(
-        "https://accounts.spotify.com/api/token",
-        headers={"Content-Type": "application/x-www-form-urlencoded"},
-        data=f'grant_type=client_credentials&client_id={SPOTIFY_CLIENT_ID}&client_secret={SPOTIFY_CLIENT_SECRET}'
-    ).json()["access_token"]
+    odesli_request = requests.get(odesli_request_url)
 
-    spotify_request = requests.get(spotify_request_url,
-                                   headers={"Authorization": f'Bearer {access_token}'})
-
-    if spotify_request.status_code != 200:
-        logger.error("Spotify request failed: " + str(spotify_request.status_code))
+    if odesli_request.status_code != 200:
+        logger.error("Odesli request failed: " + str(odesli_request.status_code))
         exit(1)
 
-    spotify_response_json = spotify_request.json()
+    odesli_response_json = odesli_request.json()
 
-    title = spotify_response_json["name"]
-    artist = spotify_response_json["artists"][0]["name"]
-    album = spotify_response_json["album"]["name"]
-    thumbnail_url = spotify_response_json["album"]["images"][0]["url"]
+    odesli_itunes_unique_id = odesli_response_json["linksByPlatform"]["itunes"]["entityUniqueId"]
 
-    frame_image_url = generate(spotify_track_id, album, title, artist, thumbnail_url)
+    odesli_itunes_entity = odesli_response_json["entitiesByUniqueId"][odesli_itunes_unique_id]
+
+    itunes_track_id = odesli_itunes_entity["id"]
+
+    itunes_search_request_url = "https://itunes.apple.com/search?media=music&entity=song&attribute=songTerm&limit=1&term=" + query
+
+    logger.info(f'itunes_search_request_url: {itunes_search_request_url}')
+
+    itunes_search_request = requests.get(itunes_search_request_url)
+
+    if itunes_search_request.status_code != 200:
+        logger.error("iTunes request failed: " + str(itunes_search_request.status_code))
+        exit(1)
+
+    song_result_object = itunes_search_request.json()["results"][0]
+
+    title = song_result_object["trackName"]
+    artist = song_result_object["artistName"]
+    album = song_result_object["collectionName"]
+    thumbnail_url = song_result_object["artworkUrl100"]
+
+    frame_image_url = generate(itunes_track_id, album, title, artist, thumbnail_url)
 
     return title, f'{album} • {artist}', frame_image_url, f'https://open.spotify.com/track/{spotify_track_id}'
 
@@ -224,50 +224,43 @@ def get_youtube_music_link(spotify_link):
 def search_music(target, query):
     logger.info("#search_music")
 
-    search_request_url = "https://api.spotify.com/v1/search?type=track&limit=1&market=IN&q=" + query
+    search_request_url = "https://itunes.apple.com/search?media=music&entity=song&attribute=songTerm&limit=1&term=" + query
 
     logger.info(f'search_request_url: {search_request_url}')
 
-    access_token = requests.post(
-        "https://accounts.spotify.com/api/token",
-        headers={"Content-Type": "application/x-www-form-urlencoded"},
-        data=f'grant_type=client_credentials&client_id={SPOTIFY_CLIENT_ID}&client_secret={SPOTIFY_CLIENT_SECRET}'
-    ).json()["access_token"]
-
-    search_request = requests.get(search_request_url,
-                                  headers={"Authorization": f'Bearer {access_token}'})
+    search_request = requests.get(search_request_url)
 
     if search_request.status_code != 200:
-        logger.error("Spotify request failed: " + str(search_request.status_code))
+        logger.error("iTunes request failed: " + str(search_request.status_code))
         exit(1)
 
-    spotify_track_id = search_request.json()["tracks"]["items"][0]["id"]
+    song_result_object = search_request.json()["results"][0]
 
-    spotify_request_url = "https://api.spotify.com/v1/tracks/" + spotify_track_id
+    itunes_song_id = str(song_result_object["trackId"])
+    title = song_result_object["trackName"]
+    artist = song_result_object["artistName"]
+    album = song_result_object["collectionName"]
+    thumbnail_url = song_result_object["artworkUrl100"]
 
-    logger.info(f'spotify_request_url: {spotify_request_url}')
+    odesli_request_url = "https://api.song.link/v1-alpha.1/links?platform=itunes&type=song&id=" + itunes_song_id
 
-    access_token = requests.post(
-        "https://accounts.spotify.com/api/token",
-        headers={"Content-Type": "application/x-www-form-urlencoded"},
-        data=f'grant_type=client_credentials&client_id={SPOTIFY_CLIENT_ID}&client_secret={SPOTIFY_CLIENT_SECRET}'
-    ).json()["access_token"]
+    logger.info(f'odesli_request_url: {odesli_request_url}')
 
-    spotify_request = requests.get(spotify_request_url,
-                                   headers={"Authorization": f'Bearer {access_token}'})
+    odesli_request = requests.get(odesli_request_url)
 
-    if spotify_request.status_code != 200:
-        logger.error("Spotify request failed: " + str(spotify_request.status_code))
+    if odesli_request.status_code != 200:
+        logger.error("Odesli request failed: " + str(odesli_request.status_code))
         exit(1)
 
-    spotify_response_json = spotify_request.json()
+    frame_image_url = generate(itunes_song_id, album, title, artist, thumbnail_url)
 
-    title = spotify_response_json["name"]
-    artist = spotify_response_json["artists"][0]["name"]
-    album = spotify_response_json["album"]["name"]
-    thumbnail_url = spotify_response_json["album"]["images"][0]["url"]
+    odesli_response_json = odesli_request.json()
 
-    frame_image_url = generate(spotify_track_id, album, title, artist, thumbnail_url)
+    odesli_spotify_unique_id = odesli_response_json["linksByPlatform"]["spotify"]["entityUniqueId"]
+
+    odesli_spotify_entity = odesli_response_json["entitiesByUniqueId"][odesli_spotify_unique_id]
+
+    spotify_track_id = odesli_spotify_entity["id"]
 
     spotify_link = f'https://open.spotify.com/track/{spotify_track_id}'
 
