@@ -4,112 +4,91 @@
 
 ### What?
 
-GeethLe makes sharing music easy! Search for any song from anywhere with geethle.tech/<your+fav+song> and instantly get a permalink to the song along with a thumbnail with metadata. It’ll redirect you to your favorite music provider, saving time when sharing tracks.
+GeethLe makes sharing music easy! Search for any song from anywhere with geethle.tech/<your+fav+song> and instantly get a permalink to the song along with a thumbnail with metadata. It’ll redirect you to YouTube Music, saving time when sharing tracks.
 
 Sooo, say you're talking to someone over WhatsApp & want to mention about a song. And, you're too lazy to go find the link. :D Don't worry, I have your back!
 
 ```https://geethle.tech/<query>```
 
-GeethLe finds the track, generates a custom thumbnail with metadata + it redirects to your favorite provider once you click on the link. 🙂
+GeethLe finds the track, generates a custom thumbnail with metadata + it redirects to YouTube Music once you click on the link. 🙂
 
 ### How to use?
 
-#### Get links to Spotify with:
-
 - ```https://geethle.tech/<query>```
-- ```https://geethle.tech/sp/<query>```
-- ```https://geethle.tech/spotify/<query>```
-
-#### Get links to Youtube with:
-
-- ```https://geethle.tech/yt/<query>```
-- ```https://geethle.tech/youtube/<query>```
-
-#### Get links to Youtube Music with:
-
-- ```https://geethle.tech/ytm/<query>```
-- ```https://geethle.tech/youtubemusic/<query>```
-  
-#### Get the details and redirection using Youtube/Spotify IDs:
-
-- ```https://geethle.tech/yt_id/<youtube-id>```
-- ```https://geethle.tech/sp_id/<spotify-id>```
 
 ### Architecture
 
 ```
-                        ┌──────────────────────────────────────────────┐
-                        │              geethle.tech                    │
-                        └──────────────────┬───────────────────────────┘
-                                           │
-                           ┌───────────────┼───────────────┐
-                           ▼               ▼               ▼
-                      /<query>        /yt_id/<id>     /sp_id/<id>
-                      /sp/<query>
-                      /yt/<query>
-                      /ytm/<query>
-                           │               │               │
-                           ▼               ▼               ▼
-                   ┌───────────────────────────────────────────────┐
-                   │                  app.py                       │
-                   │              (Flask Routes)                   │
-                   └───────────────────┬───────────────────────────┘
-                                       │
-                                       ▼
-                   ┌──────────────────────────────────────────────┐
-                   │               geeth_le.py                    │
-                   │           (Core Business Logic)              │
-                   │                                              │
-                   │  search_music()  ──► iTunes Search API       │
-                   │  generate_from_youtube() ──► Odesli API      │
-                   │  generate_from_spotify()                     │
-                   │         │                                    │
-                   │         ▼                                    │
-                   │  ┌─────────────────────────────────┐         │
-                   │  │  generate()                     │         │
-                   │  │  Download album art             │         │
-                   │  │  Overlay title + artist + album │         │
-                   │  │  (Pillow + Geist font)          │         │
-                   │  └────────────┬────────────────────┘         │
-                   │               ▼                              │
-                   │  ┌─────────────────────────────────┐         │
-                   │  │  upload_frame()                 │         │
-                   │  │  Upload to Supabase Storage     │         │
-                   │  │  Return signed URL (15-day TTL) │         │
-                   │  └─────────────────────────────────┘         │
-                   └───────────────────┬──────────────────────────┘
-                                       │
-                                       ▼
-                   ┌───────────────────────────────────────────────┐
-                   │            index.html (Template)              │
-                   │                                               │
-                   │  - OG / Twitter Card meta tags                │
-                   │    (title, description, thumbnail URL)        │
-                   │  - JS redirect to target platform             │
-                   └───────────────────┬───────────────────────────┘
-                                       │
-                           ┌───────────┼───────────┐
-                           ▼           ▼           ▼
-                       Spotify      YouTube    YouTube Music
+  ┌──────────────────────────────────────────────┐
+  │              geethle.tech                    │
+  └───────────────────┬──────────────────────────┘
+                      │
+                      ▼
+                 /<query>
+                      │
+                      ▼
+  ┌───────────────────────────────────────────────┐
+  │                  app.py                       │
+  │              (Flask Routes)                   │
+  └───────────────────┬───────────────────────────┘
+                      │
+                      ▼
+  ┌──────────────────────────────────────────────┐
+  │               geeth_le.py                    │
+  │           (Core Business Logic)              │
+  │                                              │
+  │  search_music()  ──► iTunes Search API       │
+  │               │                              │
+  │               ▼                              │
+  │  ┌─────────────────────────────────┐         │
+  │  │  _generate()                    │         │
+  │  │  Download album art             │         │
+  │  │  Overlay title + artist + album │         │
+  │  │  (Pillow + Geist font)          │         │
+  │  └────────────┬────────────────────┘         │
+  │               ▼                              │
+  │  ┌─────────────────────────────────┐         │
+  │  │  _supabase_upload_frame()       │         │
+  │  │  Upload to Supabase Storage     │         │
+  │  │  Return signed URL (15-day TTL) │         │
+  │  └─────────────────────────────────┘         │
+  │               │                              │
+  │               ▼                              │
+  │  ┌─────────────────────────────────┐         │
+  │  │  _find_yt_music_link()          │         │
+  │  │  ytmusicapi search              │         │
+  │  └─────────────────────────────────┘         │
+  └───────────────────┬──────────────────────────┘
+                      │
+                      ▼
+  ┌───────────────────────────────────────────────┐
+  │            index.html (Template)              │
+  │                                               │
+  │  - OG / Twitter Card meta tags                │
+  │    (title, description, thumbnail URL)        │
+  │  - JS redirect to YouTube Music               │
+  └───────────────────┬───────────────────────────┘
+                      │
+                      ▼
+                YouTube Music
 ```
 
-```
-External APIs:
+#### External APIs
 
+```
   ┌──────────────┐    ┌──────────────┐    ┌──────────────────────┐
-  │  iTunes API  │    │  Odesli API  │    │  Supabase Storage    │
-  │              │    │  (song.link) │    │                      │
-  │  - Search    │    │              │    │  - Thumbnail hosting │
-  │  - Metadata  │    │  - YT → SP   │    │  - Signed URLs       │
-  │  - Album art │    │  - SP → YT   │    │                      │
-  │              │    │  - SP → YTM  │    │                      │
+  │  iTunes API  │    │  ytmusicapi  │    │  Supabase Storage    │
+  │              │    │              │    │                      │
+  │  - Search    │    │  - Song      │    │  - Thumbnail hosting │
+  │  - Metadata  │    │    lookup    │    │  - Signed URLs       │
+  │  - Album art │    │              │    │                      │
   └──────────────┘    └──────────────┘    └──────────────────────┘
 ```
 
 ### Credits
 
-- Uses the [Spotify API](https://developer.spotify.com/) to fetch music metadata.
-- Uses [Odesli API](https://odesli.co/) to get the Spotify ID from YouTube ID.
+- Uses the [iTunes Search API](https://developer.apple.com/library/archive/documentation/AudioVideo/Conceptual/iTuneSearchAPI/) to fetch music metadata.
+- Uses [ytmusicapi](https://github.com/sigma67/ytmusicapi) to resolve YouTube Music links.
 - Uses [Geist](https://vercel.com/font) font for the thumbnails.
 - **[@AkashChand6n](https://github.com/AkashChand6n)** with whose convo lead me to this idea ;__;
 - **[@AbhiramVAnand](https://github.com/AbhiramVAnand)** for helping me with stuff
