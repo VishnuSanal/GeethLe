@@ -129,9 +129,14 @@ def search_music(query):
 
     if search_request.status_code != 200:
         logger.error("iTunes request failed: " + str(search_request.status_code))
-        exit(1)
+        return None
 
-    song_result_object = search_request.json()["results"][0]
+    results = search_request.json()["results"]
+    if not results:
+        logger.error(f"no iTunes results for query: {query}")
+        return None
+
+    song_result_object = results[0]
 
     itunes_song_id = str(song_result_object["trackId"])
     title = song_result_object["trackName"]
