@@ -33,7 +33,7 @@ def _supabase_upload_frame(video_id, frame_image):
         bucket.upload(
             path=path,
             file=buffer.getvalue(),
-            file_options={"content-type": "image/png"},
+            file_options={"content-type": "image/png", "upsert": "true"},
         )
 
     # expires_in is in SECONDS; 15 days = 15 * 24 * 60 * 60
@@ -43,7 +43,9 @@ def _supabase_upload_frame(video_id, frame_image):
 
 def _supabase_thumb_exists(bucket, path):
     folder, _, name = path.rpartition("/")
-    return any(f["name"] == name for f in bucket.list(folder))
+    # list() is paginated (100 by default), so scan for this name only
+    listing = bucket.list(folder, {"search": name, "limit": 1})
+    return any(f["name"] == name for f in listing)
 
 def _find_yt_music_link(artist, title):
     logger.info("#find_yt_music_link")
